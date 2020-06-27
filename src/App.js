@@ -6,6 +6,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      percentage: 0,
       fruites: [
         {
           id: 1, 
@@ -52,6 +53,35 @@ class App extends Component {
     this.setState({fruites: fruites})
   }
 
+  calculePercetage = () => {
+    console.log("calculePercetage");
+    let fruites = this.state.fruites;
+    let countChecked = 0;
+
+    fruites.forEach(fruite => {
+
+      if (fruite.subItens.length > 0) {
+        (fruite.subItens).forEach(subItem => {
+          if (subItem.isChecked === true) {
+            countChecked = countChecked + (1 / fruite.subItens.length);
+            console.log("calculePercetage | subItem | countChecked: ", countChecked);
+          }
+        }); 
+
+      } else {
+        if (fruite.isChecked === true) {
+          countChecked = countChecked + 1;
+          console.log("calculePercetage | item | countChecked: ", countChecked);
+         }
+      }
+
+
+    })
+    let percentage = (countChecked*100)/fruites.length;
+    console.log("calculePercetage | percentage: ", percentage);
+    this.setState({percentage})
+  }
+
   handleCheckChieldElement = (event) => {
     let fruites = this.state.fruites
     fruites.forEach(fruite => {
@@ -62,6 +92,7 @@ class App extends Component {
           fruite.isChecked = event.target.checked
     })
     this.setState({fruites: fruites})
+    this.calculePercetage();
   }
 
   handleCheckSubitem = (event) => {
@@ -82,14 +113,14 @@ class App extends Component {
 
     })
     this.setState({fruites: fruites})
+    this.calculePercetage();
   }
 
   render() {
     return (
       <div className="App">
-        <h1> Check and Uncheck All Example </h1>
-        <input type="checkbox" onClick={this.handleAllChecked}  value="checkedall" />
-          Check / Uncheck All
+        <h1> Check Example </h1>
+          percentage: {this.state.percentage}
         <ul>
           {
             this.state.fruites.map((fruite, key) => {
