@@ -20,7 +20,7 @@ export const CheckBox = props => {
                       <li>
                       <input 
                         key={subItem.id} 
-                        // onClick={subItem.handleCheckChieldElement} 
+                        onClick={props.handleCheckSubitem} 
                         type="checkbox" 
                         checked={subItem.isChecked} 
                         value={subItem.value} 

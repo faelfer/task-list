@@ -32,12 +32,12 @@ class App extends Component {
           subItens: [
             {
               id: 3, 
-              value: "mango", 
+              value: "Strawberry", 
               isChecked: false
             },
             {
               id: 3, 
-              value: "mango", 
+              value: "pineapple", 
               isChecked: false
             }
           ]
@@ -64,6 +64,26 @@ class App extends Component {
     this.setState({fruites: fruites})
   }
 
+  handleCheckSubitem = (event) => {
+    console.log("handleCheckSubitem");
+    let fruites = this.state.fruites
+    fruites.forEach(fruite => {
+      console.log("handleCheckSubitem | fruite: ", fruite);
+      console.log("handleCheckSubitem | fruite.value: ", fruite.value);
+      console.log("handleCheckSubitem | event.target.value: ", event.target.value);
+
+      (fruite.subItens).forEach(subItem => {
+        console.log("handleCheckSubitem | subItem: ", subItem);
+        console.log("handleCheckSubitem | subItem.value: ", subItem.value);
+        console.log("handleCheckSubitem | event.target.value: ", event.target.value);
+         if (subItem.value === event.target.value)
+            subItem.isChecked = event.target.checked
+      })
+
+    })
+    this.setState({fruites: fruites})
+  }
+
   render() {
     return (
       <div className="App">
@@ -75,7 +95,8 @@ class App extends Component {
             this.state.fruites.map((fruite, key) => {
               return (
                 <CheckBox 
-                  handleCheckChieldElement={this.handleCheckChieldElement}  
+                  handleCheckChieldElement={this.handleCheckChieldElement}
+                  handleCheckSubitem={this.handleCheckSubitem}  
                   {...fruite} 
                   key={key}
                 />
