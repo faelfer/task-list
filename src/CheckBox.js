@@ -13,7 +13,7 @@ export const CheckBox = props => {
                         <li>
                           <input 
                             key={subItem.id} 
-                            onClick={props.handleCheckSubitem} 
+                            onClick={props.onChange} 
                             type="checkbox" 
                             checked={subItem.isChecked} 
                             value={subItem.value} 
@@ -30,7 +30,7 @@ export const CheckBox = props => {
               <>
                 <input 
                   key={props.id} 
-                  onClick={props.handleCheckChieldElement} 
+                  onClick={props.onChange} 
                   type="checkbox" 
                   checked={props.isChecked} 
                   value={props.value} 

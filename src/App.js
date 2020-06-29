@@ -7,12 +7,23 @@ class App extends Component {
     super(props)
     this.state = {
       percentage: 0,
-      fruites: [
+      items: [
         {
           id: 1, 
-          value: "banana", 
+          value: "water", 
           isChecked: false,
-          subItens: []
+          subItens: [
+            {
+              id: 11, 
+              value: "08:00 (1)", 
+              isChecked: false
+            },
+            {
+              id: 11, 
+              value: "09:00 (2)", 
+              isChecked: false
+            },
+          ]
         },
         {
           id: 2, 
@@ -46,30 +57,24 @@ class App extends Component {
       ]
     }
   }
-  
-  handleAllChecked = (event) => {
-    let fruites = this.state.fruites
-    fruites.forEach(fruite => fruite.isChecked = event.target.checked) 
-    this.setState({fruites: fruites})
-  }
 
   calculePercetage = () => {
     console.log("calculePercetage");
-    let fruites = this.state.fruites;
+    let items = this.state.items;
     let countChecked = 0;
 
-    fruites.forEach(fruite => {
+    items.forEach(item => {
 
-      if (fruite.subItens.length > 0) {
-        (fruite.subItens).forEach(subItem => {
+      if (item.subItens.length > 0) {
+        (item.subItens).forEach(subItem => {
           if (subItem.isChecked === true) {
-            countChecked = countChecked + (1 / fruite.subItens.length);
+            countChecked = countChecked + (1 / item.subItens.length);
             console.log("calculePercetage | subItem | countChecked: ", countChecked);
           }
         }); 
 
       } else {
-        if (fruite.isChecked === true) {
+        if (item.isChecked === true) {
           countChecked = countChecked + 1;
           console.log("calculePercetage | item | countChecked: ", countChecked);
          }
@@ -77,42 +82,37 @@ class App extends Component {
 
 
     })
-    let percentage = (countChecked*100)/fruites.length;
+    let percentage = (countChecked*100)/items.length;
     console.log("calculePercetage | percentage: ", percentage);
     this.setState({percentage})
   }
 
-  handleCheckChieldElement = (event) => {
-    let fruites = this.state.fruites
-    fruites.forEach(fruite => {
-      console.log("handleCheckChieldElement | fruite: ", fruite);
-      console.log("handleCheckChieldElement | fruite.value: ", fruite.value);
-      console.log("handleCheckChieldElement | event.target.value: ", event.target.value);
-       if (fruite.value === event.target.value)
-          fruite.isChecked = event.target.checked
-    })
-    this.setState({fruites: fruites})
-    this.calculePercetage();
-  }
-
-  handleCheckSubitem = (event) => {
+  handleCheck = (event) => {
     console.log("handleCheckSubitem");
-    let fruites = this.state.fruites
-    fruites.forEach(fruite => {
-      console.log("handleCheckSubitem | fruite: ", fruite);
-      console.log("handleCheckSubitem | fruite.value: ", fruite.value);
+    let items = this.state.items
+    items.forEach(item => {
+      console.log("handleCheckSubitem | item: ", item);
+      console.log("handleCheckSubitem | item.value: ", item.value);
       console.log("handleCheckSubitem | event.target.value: ", event.target.value);
 
-      (fruite.subItens).forEach(subItem => {
-        console.log("handleCheckSubitem | subItem: ", subItem);
-        console.log("handleCheckSubitem | subItem.value: ", subItem.value);
-        console.log("handleCheckSubitem | event.target.value: ", event.target.value);
-         if (subItem.value === event.target.value)
-            subItem.isChecked = event.target.checked
-      })
+      if (item.subItens.length > 0) {
+        (item.subItens).forEach(subItem => {
+          console.log("handleCheckSubitem | subItem: ", subItem);
+          console.log("handleCheckSubitem | subItem.value: ", subItem.value);
+          console.log("handleCheckSubitem | event.target.value: ", event.target.value);
+           if (subItem.value === event.target.value)
+              subItem.isChecked = event.target.checked
+        });
+
+      } else {
+        if (item.value === event.target.value) {
+          item.isChecked = event.target.checked
+        }
+
+      }
 
     })
-    this.setState({fruites: fruites})
+    this.setState({items: items})
     this.calculePercetage();
   }
 
@@ -120,16 +120,15 @@ class App extends Component {
     return (
       <div className="App">
         <h1> Check Example </h1>
-          percentage: {this.state.percentage}
+          Percentage: {this.state.percentage}
         <ul>
           {
-            this.state.fruites.map((fruite, key) => {
+            this.state.items.map((item, key) => {
               return (
                 <CheckBox 
-                  handleCheckChieldElement={this.handleCheckChieldElement}
-                  handleCheckSubitem={this.handleCheckSubitem}  
-                  {...fruite} 
-                  key={key}
+                  onChange={this.handleCheck}
+                  {...item} 
+                  key={item.id}
                 />
               )
             })
