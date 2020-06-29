@@ -7,54 +7,7 @@ class App extends Component {
     super(props)
     this.state = {
       percentage: 0,
-      items: [
-        {
-          id: 1, 
-          value: "water", 
-          isChecked: false,
-          subItens: [
-            {
-              id: 11, 
-              value: "08:00 (1)", 
-              isChecked: false
-            },
-            {
-              id: 11, 
-              value: "09:00 (2)", 
-              isChecked: false
-            },
-          ]
-        },
-        {
-          id: 2, 
-          value: "apple", 
-          isChecked: false,
-          subItens: []
-        },
-        {
-          id: 3, 
-          value: "mango", 
-          isChecked: false,
-          subItens: []
-        },
-        {
-          id: 4, 
-          value: "orange", 
-          isChecked: false,
-          subItens: [
-            {
-              id: 3, 
-              value: "Strawberry", 
-              isChecked: false
-            },
-            {
-              id: 3, 
-              value: "pineapple", 
-              isChecked: false
-            }
-          ]
-        }
-      ]
+      items: []
     }
   }
 
@@ -119,8 +72,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1> Check Example </h1>
-          Percentage: {this.state.percentage}
+        <h1> Check List </h1>
+        Completed: {Math.round(this.state.percentage)}%
         <ul>
           {
             this.state.items.map((item, key) => {
