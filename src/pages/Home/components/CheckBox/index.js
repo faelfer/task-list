@@ -1,19 +1,19 @@
-import React from 'react'
+import React from 'react';
 
-export const CheckBox = props => {
+export default function CheckBox({ onCheck, onSubCheck, item, index }) {
     return (
       <li>
-          {props.subItens.length > 0 ?
+          {item.subItens.length > 0 ?
               <>
-                <label>{"• " + props.value}</label>
+                <label>{"• " + item.value}</label>
                 <ul>
                   {
-                    (props.subItens.map(subItem => {
+                    (item.subItens.map((subItem, subIndex) => {
                       return(
                         <li>
                           <input 
                             key={subItem.id} 
-                            onClick={props.onChange} 
+                            onClick={() => onSubCheck(index, subIndex, subItem.isChecked)} 
                             type="checkbox" 
                             checked={subItem.isChecked} 
                             value={subItem.value} 
@@ -29,17 +29,15 @@ export const CheckBox = props => {
             :
               <>
                 <input 
-                  key={props.id} 
-                  onClick={props.onChange} 
+                  key={item.id} 
+                  onClick={() => onCheck(index, item.isChecked)} 
                   type="checkbox" 
-                  checked={props.isChecked} 
-                  value={props.value} 
+                  checked={item.isChecked} 
+                  value={item.value} 
                 /> 
-                <label>{props.value}</label>
+                <label>{item.value}</label>
               </>
           }
       </li>
     )
 }
-
-export default CheckBox
